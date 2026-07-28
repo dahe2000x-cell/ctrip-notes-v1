@@ -113,6 +113,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:8px 10px;text-align:left
     <div style="display:flex;gap:8px">
       <button class="btn btn-sm" onclick="scoreAllTopics()" style="background:var(--aml);color:var(--am);border:none">📊 一键评分</button>
       <button class="btn btn-sm" onclick="syncTopics()" style="background:var(--bll);color:var(--bl);border:none">🔄 同步选题库</button>
+      <button class="btn btn-sm" onclick="loadFromServer().then(()=>{renderTopics();renderImages()})" style="background:var(--gnl);color:var(--gn);border:none">📥 从服务器加载</button>
       <button class="btn btn-p btn-sm" onclick="openTopicForm()">+ 新增</button>
     </div>
   </div>
@@ -449,6 +450,13 @@ async function syncToSvr(type){
   try{await fetch('/api/save-'+type,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});document.getElementById('statusBar').textContent='已同步'}
   catch(e){document.getElementById('statusBar').textContent='同步失败(离线)'}}
 
+async function loadFromServer(){
+  let loaded=false;
+  try{let r=await fetch('topics.json');let st=await r.json();S(K.TP,st);loaded=true}catch(e){}
+  try{let r=await fetch('images.json');let si=await r.json();S(K.IM,si);loaded=true}catch(e){}
+  if(loaded)document.getElementById('statusBar').textContent='已加载服务端数据'}
+    else{document.getElementById('statusBar').textContent='离线模式(本地数据)'}
+
 function loadDemo(){
   if(L(K.TP).length>0&&L(K.IM).length>0){if(!confirm('已有数据，加载示例将合并进去。继续？'))return}
   let dtp=[{id:U(),city:'成都',formula:'S级',strength:'S',imageTitle:'成都遭罪已回｜真不建议7-8月去',bodyTitle:'成都暑假慢慢玩，太适合住几天🐼',targetAudience:'带爸妈',weatherRisk:'绿',coreProblem:'暑假不能不去，但不能按暴走方式玩',moneyAngle:'暑假核心区¥400-700，地铁沿线¥250-450',mustWrite:'交通、住宿区域、门票、避坑、路线、美食、天气',mustNotWrite:'伪亲历、海岛船班、漂流',imageNeeds:'封面竖图、都江堰、熊猫基地、宽窄巷子、火锅、人民公园',status:'未用',usedDate:'',_score:0},
@@ -477,7 +485,8 @@ function loadDemo(){
 
   renderTasks();renderTopics();renderImages();alert('已加载 10个示例选题 + 10张示例图片\n\n替换这些数据: 在选题库/素材库编辑你自己的\n导入真实图片: 素材库 → 批量导入\n智能推荐: 选完题后点🧠按钮即可看到效果')}
 
-window.onload=function(){
+window.onload=async function(){
+  await loadFromServer();
   renderTasks();renderTopics();renderImages();
   setInterval(()=>{document.getElementById('statusBar').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false})},1000);
   if(L(K.TP).length===0&&L(K.IM).length===0){
