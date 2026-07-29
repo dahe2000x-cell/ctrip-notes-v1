@@ -85,8 +85,8 @@
     "mustWrite": "交通、住宿、路线、避坑、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、中央大街、索菲亚教堂、太阳岛、俄餐",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-30",
     "_score": 0
   },
   {
@@ -247,8 +247,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、龙井村、茅家埠、运河、东坡肉、茶园",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-30",
     "_score": 0
   },
   {
@@ -463,8 +463,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、洱海、喜洲古镇、双廊、酸辣鱼、白族民居",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-30",
     "_score": 0
   },
   {
@@ -499,8 +499,8 @@
     "mustWrite": "交通、住宿、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、东江湖、高椅岭、仰天湖、鱼粉、雾漫小东江",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-30",
     "_score": 0
   },
   {
