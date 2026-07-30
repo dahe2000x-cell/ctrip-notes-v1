@@ -391,8 +391,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历、峡谷漂流",
     "imageNeeds": "封面竖图、漓江、阳朔、龙脊梯田、桂林米粉、山水",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-31",
     "_score": 0
   },
   {
@@ -409,8 +409,8 @@
     "mustWrite": "交通、住宿、美食、路线",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、青秀山、南湖、老友粉、柠檬鸭",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-31",
     "_score": 0
   },
   {
@@ -427,8 +427,8 @@
     "mustWrite": "交通、住宿、避暑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、黄河铁桥、白塔山、正宁路夜市、牛肉面、黄河风情线",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-31",
     "_score": 0
   },
   {
@@ -607,8 +607,8 @@
     "mustWrite": "交通、住宿、避暑山庄、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、避暑山庄、外八庙、棒槌山、承德凉粉、皇家园林",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-07-31",
     "_score": 0
   },
   {
