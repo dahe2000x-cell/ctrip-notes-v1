@@ -176,12 +176,17 @@ function openFixModal(i){
   document.getElementById('fixModal').classList.add('show');
   window._fixIssues=issues;window._fixIdx=i}
 function doFix(j,i){
-  let cmd=window._fixIssues[j].cmd;
-  if(j===6)cmd+=prompt('请描述具体问题：')||'';
-  navigator.clipboard.writeText(cmd).then(()=>{
-    closeFixModal();
-    let t=document.getElementById('toast');t.textContent='✅ 指令已复制，到WorkBuddy粘贴发送';t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.textContent='已复制到剪贴板'},2000)
-  }).catch(()=>alert('复制失败'))}
+  let n=notes[i],issue=window._fixIssues[j];
+  let body={date:curDate,idx:n.idx,city:n.city,account:n.account,issue:issue.label};
+  navigator.clipboard.writeText(issue.cmd); // backup: also copy
+  fetch('/api/request-fix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    .then(r=>r.json()).then(d=>{
+      closeFixModal();
+      let t=document.getElementById('toast');t.textContent=d.ok?'✅ 已提交！AI马上处理':'⚠️ '+d.error;t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.textContent='已复制到剪贴板'},3000)
+    }).catch(e=>{
+      closeFixModal();
+      let t=document.getElementById('toast');t.textContent='指令已复制，到WorkBuddy粘贴发送';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)
+    })}
 function closeFixModal(){document.getElementById('fixModal').classList.remove('show')}
 function toggleQuickFix(i){
   let el=document.getElementById('qf'+i);

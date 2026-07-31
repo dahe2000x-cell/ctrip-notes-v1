@@ -24,6 +24,8 @@ class SyncHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path == '/api/fix-note':
             self._fix_note()
+        elif self.path == '/api/request-fix':
+            self._request_fix()
         elif self.path == '/api/save-topics':
             self._save_json('topics.json')
         elif self.path == '/api/save-images':
@@ -99,6 +101,29 @@ class SyncHandler(http.server.SimpleHTTPRequestHandler):
                 "field": field,
                 "words": new_words
             })
+        except Exception as e:
+            self._json_resp(500, {"error": str(e)})
+
+    def _request_fix(self):
+        """AI修改请求队列: {date, idx, city, issue, account}"""
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = json.loads(self.rfile.read(content_length))
+            import time
+            req_file = os.path.join(DIR, 'fix_requests.json')
+            reqs = json.load(open(req_file)) if os.path.exists(req_file) else []
+            reqs.append({
+                "time": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "date": body.get('date',''),
+                "idx": body.get('idx',0),
+                "city": body.get('city',''),
+                "account": body.get('account',''),
+                "issue": body.get('issue',''),
+                "status": "pending"
+            })
+            with open(req_file, 'w', encoding='utf-8') as f:
+                json.dump(reqs, f, ensure_ascii=False, indent=2)
+            self._json_resp(200, {"ok": True, "message": "已提交"})
         except Exception as e:
             self._json_resp(500, {"error": str(e)})
 
