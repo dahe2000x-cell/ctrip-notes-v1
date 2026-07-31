@@ -27,7 +27,22 @@ body{font-family:var(--f);background:var(--bg2);color:var(--text);font-size:14px
 .btn-p{background:var(--pr);color:#fff}.btn-p:hover{opacity:.9}
 .btn-g{background:var(--gn);color:#fff}.btn-g:hover{opacity:.9}
 .btn-o{background:var(--bg);border:1px solid var(--bdr);color:var(--text)}
+.btn-w{background:var(--rd);color:#fff}.btn-w:hover{opacity:.9}
 .copy-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--prd);color:#fff;padding:10px 24px;border-radius:20px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s}
+.fix-modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.fix-modal.show{opacity:1;pointer-events:auto}
+.fix-card{background:var(--bg);border-radius:var(--rl);width:90%;max-width:360px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.15)}
+.fix-card h3{font-size:15px;margin-bottom:12px}
+.fix-card .issue-btn{display:block;width:100%;padding:10px 14px;margin-bottom:8px;border:1px solid var(--bdr);border-radius:var(--r);background:var(--bg);font-size:13px;text-align:left;cursor:pointer;transition:all .15s}
+.fix-card .issue-btn:active{background:var(--bg3)}
+.quick-fix{display:none;padding:8px 14px;border-top:1px solid var(--bdr);background:var(--bg2)}
+.quick-fix.show{display:block}
+.quick-fix .qf-row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.quick-fix .qf-row:last-child{margin-bottom:0}
+.quick-fix input{flex:1;padding:6px 8px;border:1px solid var(--bdr);border-radius:6px;font-size:13px}
+.quick-fix .qf-btn{padding:6px 10px;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:500}
+.quick-fix .qf-save{background:var(--gn);color:#fff}
+.quick-fix .qf-done{color:var(--gn);font-size:12px;font-weight:500}
 .copy-toast.show{opacity:1}
 .loading{text-align:center;padding:40px;color:var(--t3)}
 .empty{text-align:center;padding:60px 20px;color:var(--t3)}.empty .em{font-size:48px;margin-bottom:12px}
@@ -60,6 +75,13 @@ body{font-family:var(--f);background:var(--bg2);color:var(--text);font-size:14px
 <div class="nav-tabs" id="navTabs"></div>
 <div id="content"></div>
 <div class="copy-toast" id="toast">已复制到剪贴板</div>
+<div class="fix-modal" id="fixModal">
+  <div class="fix-card">
+    <h3>🔧 这篇笔记有什么问题？</h3>
+    <div id="fixOptions"></div>
+    <button class="btn btn-o" style="width:100%;margin-top:6px" onclick="closeFixModal()">取消</button>
+  </div>
+</div>
 
 <script>
 let notes=[],curTab=0,curDate='';
@@ -110,10 +132,26 @@ function renderPost(i){
       </div>
       <div class="post-btns">
         <button class="btn btn-p" onclick="copyField(${i},'imageTitle')">复制图片标题</button>
-        <button class="btn btn-p" onclick="copyField(${i},'bodyTitle')">复制正文标题</button>
         <button class="btn btn-g" onclick="copyField(${i},'body')">复制正文</button>
         <button class="btn btn-o" onclick="copyField(${i},'tags')">复制标签</button>
-        ${imgs.length>0?`<button class="btn btn-o" onclick="copyImgList(${i})">复制配图清单</button>`:''}
+        ${imgs.length>0?`<button class="btn btn-o" onclick="copyImgList(${i})">复制配图</button>`:''}
+        <button class="btn btn-w" onclick="toggleQuickFix(${i})">🔧 快速修改</button>
+        <button class="btn btn-o" onclick="openFixModal(${i})" style="font-size:11px">📋 请求AI</button>
+      </div>
+      <div class="quick-fix" id="qf${i}">
+        <div class="qf-row">
+          <input id="qfCity${i}" placeholder="新城市名" value="${n.city||''}">
+          <button class="qf-btn qf-save" onclick="doQuickFix(${i},'city')">换城市</button>
+        </div>
+        <div class="qf-row">
+          <input id="qfImgTitle${i}" placeholder="图片标题">
+          <button class="qf-btn qf-save" onclick="doQuickFix(${i},'imageTitle')">改图片标题</button>
+        </div>
+        <div class="qf-row">
+          <input id="qfBodyTitle${i}" placeholder="正文标题">
+          <button class="qf-btn qf-save" onclick="doQuickFix(${i},'bodyTitle')">改正文标题</button>
+        </div>
+        <div id="qfStatus${i}" style="font-size:11px;margin-top:4px"></div>
       </div>
     </div>`}
 function copyField(i,field){
@@ -123,6 +161,60 @@ function copyImgList(i){
   if(cover)lines.push('【封面】'+cover.filename);
   imgs.forEach((im,j)=>lines.push((j+1)+'. '+im.filename+' ['+(im.scene||'')+']'));
   navigator.clipboard.writeText(lines.join('\n')).then(()=>{let t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1500)}).catch(()=>alert('复制失败'))}
+function openFixModal(i){
+  let n=notes[i],date=fmtDate(curDate);
+  let issues=[
+    {label:'字数不够，需要扩展',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，字���不够，需要扩展到1800字左右`},
+    {label:'字数太多，需要删减',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，字数超标，需要删到1800字左右`},
+    {label:'城市重复了，需要换城市',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，这个城市7天内重复了，需要换成其他城市`},
+    {label:'内容结构不完整',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，住宿/吃/路线/避坑内容太敷衍，需要按规范重新写完整`},
+    {label:'图片标题需要修改',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，图片标题需要修改`},
+    {label:'正文标题需要修改',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，正文标题需要修改`},
+    {label:'其他问题（请补充）',cmd:`修改 ${date} 第${n.idx}篇 ${n.city}，`}
+  ];
+  document.getElementById('fixOptions').innerHTML=issues.map((v,j)=>`<button class="issue-btn" onclick="doFix(${j},${i})"><b>${j+1}.</b> ${v.label}</button>`).join('');
+  document.getElementById('fixModal').classList.add('show');
+  window._fixIssues=issues;window._fixIdx=i}
+function doFix(j,i){
+  let cmd=window._fixIssues[j].cmd;
+  if(j===6)cmd+=prompt('请描述具体问题：')||'';
+  navigator.clipboard.writeText(cmd).then(()=>{
+    closeFixModal();
+    let t=document.getElementById('toast');t.textContent='✅ 指令已复制，到WorkBuddy粘贴发送';t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.textContent='已复制到剪贴板'},2000)
+  }).catch(()=>alert('复制失败'))}
+function closeFixModal(){document.getElementById('fixModal').classList.remove('show')}
+function toggleQuickFix(i){
+  let el=document.getElementById('qf'+i);
+  if(el.classList.contains('show')){el.classList.remove('show');return}
+  document.querySelectorAll('.quick-fix').forEach(q=>q.classList.remove('show'));
+  el.classList.add('show');
+  // fill current values
+  let n=notes[i];
+  document.getElementById('qfCity'+i).value=n.city||'';
+  document.getElementById('qfImgTitle'+i).value=n.imageTitle||'';
+  document.getElementById('qfBodyTitle'+i).value=n.bodyTitle||'';
+}
+async function doQuickFix(i,field){
+  let n=notes[i],st=document.getElementById('qfStatus'+i);
+  let inputId='qf'+(field==='city'?'City':field==='imageTitle'?'ImgTitle':'BodyTitle')+i;
+  let val=document.getElementById(inputId).value.trim();
+  if(!val){st.textContent='⚠️ 不能为空';return}
+  if(val===n[field]){st.textContent='✅ 没有变化';return}
+  st.textContent='⏳ 修改中...';
+  try{
+    let resp=await fetch('/api/fix-note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:curDate,idx:n.idx,field:field,value:val})});
+    let data=await resp.json();
+    if(data.ok){
+      n[field]=val;
+      renderPost(i);
+      st.textContent='✅ 已修改！'+(data.words?' 字数:'+data.words:'');
+    }else{
+      st.textContent='❌ '+data.error;
+    }
+  }catch(e){
+    st.textContent='❌ 服务器未连接（需要电脑端运行 server.py）';
+  }
+}
 window.onload=load;
 </script>
 </body>
