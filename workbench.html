@@ -98,15 +98,23 @@ tr:hover td{background:var(--prl);transition:background .15s}
 
 <div id="tab-tasks">
   <div class="header2">
-    <h2>今日任务 <span style="font-weight:400;font-size:13px;color:var(--t3);margin-left:6px" id="dateDisplay"></span></h2>
+    <h2>状态看板</h2>
     <div class="actions">
-      <span style="font-size:12px;color:var(--t2);align-self:center" id="progressText"></span>
-      <button class="btn btn-o btn-sm" onclick="resetToday()">重置</button>
-      <button class="btn btn-p btn-sm" onclick="smartRecommend()">🧠 智能推荐</button>
+      <button class="btn btn-o btn-sm" onclick="refreshDashboard()">🔄 刷新</button>
     </div>
   </div>
-  <div id="alertBox"></div>
-  <div class="task-grid" id="taskGrid"></div>
+
+  <!-- 指令快捷面板 -->
+  <div class="card" style="background:linear-gradient(135deg,var(--prl),#f5f3ff);border-color:var(--pr);margin-bottom:16px">
+    <div style="font-weight:600;font-size:13px;margin-bottom:10px;color:var(--prd)">⚡ 快捷指令 · 点一下复制 → 粘贴到聊天</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="cmdPanel"></div>
+  </div>
+
+  <!-- 近7天状态表 -->
+  <div class="card" style="padding:0;overflow-x:auto">
+    <table><thead><tr><th>日期</th><th>林姐</th><th>叮咚1</th><th>叮咚2</th><th>叮咚3</th><th>⚠️</th></tr></thead>
+    <tbody id="dashTable"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:24px">加载中...</td></tr></tbody></table>
+  </div>
 </div>
 
 <div id="tab-topics" style="display:none">
@@ -205,6 +213,61 @@ function getTasks(){
 
 function saveTask(idx,fd,val){
   let t=L(K.T);t[D()][idx][fd]=val;S(K.T,t);renderTasks()}
+
+function refreshDashboard(){
+  document.getElementById('dashTable').innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px">加载中...</td></tr>';
+  renderDashboard();
+  renderCmdPanel();
+}
+async function renderDashboard(){
+  let html='';
+  let today=new Date();
+  for(let i=6;i>=0;i--){
+    let d=new Date(today);d.setDate(d.getDate()-i);
+    let ds=d.toISOString().slice(0,10).replace(/-/g,'');
+    let fn='notes_'+ds+'.json';
+    try{
+      let r=await fetch(fn);let posts=await r.json();
+      let cells=['','','',''],issues=[];
+      for(let p of posts){
+        let idx=p.idx-1;
+        let w=len(p.body);
+        let icon=w>=1800?'✅':w>=1200?'⚠️':'❌';
+        cells[idx]=icon+' '+p.city+' ('+w+'字)';
+        if(w<1200) issues.push(p.city+'字数不足');
+      }
+      html+='<tr><td style="white-space:nowrap;font-weight:600">'+ds.slice(4,6)+'/'+ds.slice(6)+'</td>';
+      for(let c of cells) html+='<td style="font-size:12px">'+(c||'—')+'</td>';
+      html+='<td style="font-size:11px;color:var(--rd)">'+(issues.length?issues.join('<br>'):'<span style="color:var(--gn)">✓</span>')+'</td></tr>';
+    }catch(e){
+      html+='<tr><td style="white-space:nowrap;font-weight:600">'+ds.slice(4,6)+'/'+ds.slice(6)+'</td><td colspan="5" style="color:var(--t3)">暂无</td></tr>';
+    }
+  }
+  document.getElementById('dashTable').innerHTML=html||'<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:24px">暂无数据</td></tr>';
+}
+function renderCmdPanel(){
+  let cmds=[
+    {label:'生成明天笔记',cmd:'帮我生成明天的4篇携程笔记'},
+    {label:'替换XX城市',cmd:'把[日期]的[城市]换成新城市'},
+    {label:'扩展某篇字数',cmd:'[日期]第[X]篇字数不达标，帮我重写'},
+    {label:'检查重复城市',cmd:'帮我检查最近7天有没有重复城市'},
+    {label:'全部重写某天',cmd:'帮我重写[日期]的4篇笔记，1800字标准'},
+    {label:'修改图片标题',cmd:'[日期]的[城市]图片标题改成：[新标题]'},
+  ];
+  let html=cmds.map(c=>'<button class="btn btn-sm" style="background:var(--card);border:1px solid var(--pr);color:var(--prd)" onclick="copyCmd(\''+c.cmd.replace(/'/g,"\\'")+'\')">'+c.label+'</button>').join('');
+  document.getElementById('cmdPanel').innerHTML=html;
+}
+function copyCmd(txt){
+  navigator.clipboard.writeText(txt).then(()=>{
+    showToast('✅ 已复制，粘贴到聊天发送');
+  });
+}
+function showToast(msg){
+  let t=document.createElement('div');t.textContent=msg;
+  t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--prd);color:#fff;padding:10px 20px;border-radius:8px;font-size:12px;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.2)';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2000);
+}
 
 function renderTasks(){
   let day=getTasks(),done=day.filter(t=>t.publishStatus==='已发布').length;
@@ -447,7 +510,7 @@ function switchTab(tab){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>{if(b.textContent.includes(tab==='tasks'?'今日任务':tab==='topics'?'选题库':'素材库'))b.classList.add('active')});
   document.querySelectorAll('[id^="tab-"]').forEach(d=>d.style.display='none');document.getElementById('tab-'+tab).style.display='block';
-  if(tab==='tasks')renderTasks();if(tab==='topics')renderTopics();if(tab==='images')renderImages()}
+  if(tab==='tasks'){renderDashboard();renderCmdPanel()}if(tab==='topics')renderTopics();if(tab==='images')renderImages()}
 
 async function syncToSvr(type){
   let data=type==='topics'?L(K.TP):L(K.IM);
@@ -491,7 +554,9 @@ function loadDemo(){
 
 window.onload=async function(){
   await loadFromServer();
-  renderTasks();renderTopics();renderImages();
+  renderDashboard();renderCmdPanel();
+  document.getElementById('tab-topics').style.display='none';
+  document.getElementById('tab-images').style.display='none';
   setInterval(()=>{document.getElementById('statusBar').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false})},1000);
   if(L(K.TP).length===0&&L(K.IM).length===0){
     setTimeout(()=>{
