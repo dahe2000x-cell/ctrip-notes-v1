@@ -535,8 +535,8 @@
     "mustWrite": "交通、住宿、早茶、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、瘦西湖、东关街、何园、扬州早茶、扬州炒饭",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-03",
     "_score": 0
   },
   {
@@ -962,8 +962,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-03",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
@@ -1166,8 +1166,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-03",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
@@ -1364,8 +1364,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-03",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
