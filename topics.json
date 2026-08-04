@@ -31,8 +31,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历、宗教祈福",
     "imageNeeds": "封面竖图、兵马俑、城墙、回民街、大雁塔、肉夹馍",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-05",
     "_score": 0
   },
   {
@@ -157,8 +157,8 @@
     "mustWrite": "交通、住宿、美食、路线",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、孙文西路、詹园、乳鸽、老街",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-05",
     "_score": 0
   },
   {
@@ -175,8 +175,8 @@
     "mustWrite": "交通、住宿、路线、避坑、美食、天气",
     "mustNotWrite": "海岛船班",
     "imageNeeds": "封面竖图、八大关、崂山、啤酒街、海鲜、老城",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-05",
     "_score": 0
   },
   {
@@ -319,8 +319,8 @@
     "mustWrite": "交通、住宿、园林选择、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、留园、山塘街、金鸡湖、苏式面、园林",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-05",
     "_score": 0
   },
   {
