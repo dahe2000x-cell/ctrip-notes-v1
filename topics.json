@@ -139,8 +139,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "海岛船班主线、伪亲历",
     "imageNeeds": "封面竖图、鼓浪屿、曾厝垵、沙坡尾、沙茶面、海边",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-06",
     "_score": 0
   },
   {
@@ -283,8 +283,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、东湖、汉口江滩、黎黄陂路、热干面、小龙虾",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-06",
     "_score": 0
   },
   {
@@ -517,8 +517,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、鼋头渚、惠山古镇、南长街、太湖三白、酱排骨",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-06",
     "_score": 0
   },
   {
@@ -924,8 +924,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-06",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
