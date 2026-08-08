@@ -481,8 +481,8 @@
     "mustWrite": "交通、住宿古城选择、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历、宗教祈福",
     "imageNeeds": "封面竖图、玉龙雪山、束河古镇、拉市海、腊排骨、纳西民居",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-10",
     "_score": 0
   },
   {
@@ -661,8 +661,8 @@
     "mustWrite": "交通、住宿、索道、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历、峡谷漂流",
     "imageNeeds": "封面竖图、黄山云海、宏村、西递、臭鳜鱼、徽派建筑",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-10",
     "_score": 0
   },
   {
@@ -1220,8 +1220,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-10",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
@@ -1328,8 +1328,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-10",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
