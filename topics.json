@@ -464,7 +464,7 @@
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、洱海、喜洲古镇、双廊、酸辣鱼、白族民居",
     "status": "已用",
-    "usedDate": "2026-07-30",
+    "usedDate": "2026-08-09",
     "_score": 0
   },
   {
@@ -643,8 +643,8 @@
     "mustWrite": "交通、住宿、龙门石窟、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历、宗教祈福",
     "imageNeeds": "封面竖图、龙门石窟、白马寺、洛阳博物馆、水席、牡丹花",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-09",
     "_score": 0
   },
   {
@@ -1184,8 +1184,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-09",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
@@ -1616,8 +1616,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-09",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
