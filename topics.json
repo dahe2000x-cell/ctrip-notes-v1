@@ -355,8 +355,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、深圳湾、大鹏半岛、华侨城、椰子鸡、海边",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-11",
     "_score": 0
   },
   {
@@ -589,8 +589,8 @@
     "mustWrite": "交通、住宿、避坑、路线、美食、天气",
     "mustNotWrite": "海岛船班",
     "imageNeeds": "封面竖图、山海关、鸽子窝、阿那亚、海鲜、海滩",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-11",
     "_score": 0
   },
   {
@@ -848,8 +848,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-11",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
@@ -1256,8 +1256,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-11",
     "_score": 0,
     "createdAt": "2026-07-30"
   },
