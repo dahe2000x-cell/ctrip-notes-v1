@@ -211,8 +211,8 @@
     "mustWrite": "交通、住宿、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图、外滩、豫园、武康路、小笼包、夜景",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-12",
     "_score": 0
   },
   {
@@ -715,8 +715,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-12",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
@@ -772,8 +772,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-12",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
@@ -1038,8 +1038,8 @@
     "mustWrite": "交通、住宿区域、门票、避坑、路线、美食、天气",
     "mustNotWrite": "伪亲历",
     "imageNeeds": "封面竖图",
-    "status": "未用",
-    "usedDate": "",
+    "status": "已用",
+    "usedDate": "2026-08-12",
     "_score": 0,
     "createdAt": "2026-07-30",
     "priority": "新增"
